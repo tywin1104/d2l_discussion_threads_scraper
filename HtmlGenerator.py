@@ -4,6 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
+htmls = []
+
 chromedriver = './chromedriver'
 brower = webdriver.Chrome(chromedriver)
 brower.get('http://avenue.mcmaster.ca/?failed=1&authCode=2')
@@ -21,29 +24,43 @@ password.send_keys("412476Can*")
 submitButton = brower.find_element_by_id("submit")
 submitButton.click()
 
-# Enter Dashboard
-try:
-    cs1jc3_link = WebDriverWait(brower, 10).until(
-        EC.presence_of_element_located((By.XPATH , "//a[@href='/d2l/home/214879']"))
-    )
-    cs1jc3_link.click()
-except:
-    print('Cuold not locate cs1jc3 course page')
-    brower.quit()
+all_courses_tab = brower.find_element_by_xpath("//d2l-tab[@title='All']")
+all_courses_tab.click()
 
-# Open Discussion Board
+
+# # Enter Dashboard
+
+cs1jc3_link = WebDriverWait(brower, 10).until(
+        EC.visibility_of_element_located(
+            (By.XPATH , "//a[@href='/d2l/home/214879']")
+        )
+)
+cs1jc3_link.click()
+
+# # Open Discussion Board
 tabs = brower.find_elements_by_css_selector("button.d2l-navigation-s-group.d2l-dropdown-opener")
 communication_tab = tabs[1]
 communication_tab.click()
 
 try:
     dicussion_tab = WebDriverWait(brower, 10).until(
-        EC.presence_of_element_located((By.LINK_TEXT , 'Discussions'))
+        EC.visibility_of_element_located((By.LINK_TEXT , 'Discussions'))
     )
     dicussion_tab.click()
 except:
     print('Cuold not locate discussion tab')
     brower.quit()
 
-time.sleep(5)
-brower.close()
+# # Open certain M&M page ex. 03
+mm03 = brower.find_element_by_link_text("M&Ms for Week 03")
+mm03.click()
+
+counter = 1
+while True:
+    next_button = brower.find_element_by_xpath("//a[@title='Next Page']")
+    if next_button.get_attribute('aria-disabled'):
+        break
+    else:
+        next_button.click()
+        html = brower.page_source
+        htmls.append(html)
