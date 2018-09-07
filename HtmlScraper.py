@@ -88,15 +88,3 @@ class HtmlScraper:
         self.configure()
         self.to_discussion_page()
         self.iterate_pages()
-
-# Testing
-# obj = HtmlScraper(week='03')
-# obj.start()
-
-# for index, html in enumerate(obj.htmls):
-#     with open(f'page{index}.html', 'w') as fh:
-#         fh.write(html)
-
-
-# from NameCounter import NameCounter
-# NameCounter().parse()
