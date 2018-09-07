@@ -6,13 +6,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 AVENUE_HOME_PAGE_URL = 'http://avenue.mcmaster.ca/?failed=1&authCode=2'
+COURSE_2018FALL_URL = '/d2l/home/252929'
+COURSE_TEST_URL = '/d2l/home/214879'
 
 
 class HtmlScraper:
     def __init__(self, week):
         self.htmls = []
         self.week = week
-        self.avenue_home_page = 'http://avenue.mcmaster.ca/?failed=1&authCode=2'
         self.browser = None
 
     def configure(self):
@@ -46,7 +47,7 @@ class HtmlScraper:
         # Avenue Dashboard
         cs1jc3_link = WebDriverWait(self.browser, 10).until(
                 EC.visibility_of_element_located(
-                    (By.XPATH, "//a[@href='/d2l/home/214879']")
+                    (By.XPATH, f"//a[@href='{COURSE_TEST_URL}']")
                 )
         )
         cs1jc3_link.click()
