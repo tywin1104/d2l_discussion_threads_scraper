@@ -38,7 +38,9 @@ class HtmlScraper:
         submitButton = self.browser.find_element_by_id("submit")
         submitButton.click()
 
-        all_courses_tab = self.browser.find_element_by_xpath("//d2l-tab[@title='All']")
+        all_courses_tab = WebDriverWait(self.browser, 10).until(
+                EC.visibility_of_element_located((By.XPATH, "//d2l-tab[@title='All']"))
+            )
         all_courses_tab.click()
 
         # Avenue Dashboard
@@ -65,13 +67,14 @@ class HtmlScraper:
             print('Cuold not locate discussion tab')
             self.browser.quit()
 
-        # # Open M&M page for specified week
+        # Open M&M page for specified week
         topic_str = f'M&Ms for Week {self.week}'
         mm = self.browser.find_element_by_link_text(topic_str)
         mm.click()
 
     def iterate_pages(self):
         while True:
+            # Sleep 5 seconds for loading all source html
             time.sleep(5)
             html = self.browser.page_source
             self.htmls.append(html)
@@ -86,10 +89,14 @@ class HtmlScraper:
         self.to_discussion_page()
         self.iterate_pages()
 
-obj = HtmlScraper(week='09')
-obj.start()
+# Testing
+# obj = HtmlScraper(week='03')
+# obj.start()
 
-for index, html in enumerate(obj.htmls):
-    with open(f'page{index}.html', 'w') as fh:
-        fh.write(html)
+# for index, html in enumerate(obj.htmls):
+#     with open(f'page{index}.html', 'w') as fh:
+#         fh.write(html)
 
+
+# from NameCounter import NameCounter
+# NameCounter().parse()

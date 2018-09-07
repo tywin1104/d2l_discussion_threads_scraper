@@ -1,15 +1,8 @@
 from bs4 import BeautifulSoup
 
 
-with open('page0.html', 'r') as fh:
-    page_one_html = fh.read()
-with open('page1.html', 'r') as fh:
-    page_two_html = fh.read()
-
-
 class NameCounter:
-
-    def __init__(self, raw_htmls=[page_one_html, page_two_html]):
+    def __init__(self, raw_htmls):
         # self.names = set()
         self.names = []
         self.raw_htmls = raw_htmls
