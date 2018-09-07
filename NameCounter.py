@@ -1,16 +1,17 @@
 from bs4 import BeautifulSoup
 
 
-# with open('test.html', 'r') as fh:
-#     page_one_html = fh.read()
+with open('page0.html', 'r') as fh:
+    page_one_html = fh.read()
+with open('page1.html', 'r') as fh:
+    page_two_html = fh.read()
 
-# with open('test1.html', 'r') as fh:
-#     page_two_html = fh.read()
 
 class NameCounter:
 
-    def __init__(self, raw_htmls = [page_one_html, page_two_html]):
-        self.names = set()
+    def __init__(self, raw_htmls=[page_one_html, page_two_html]):
+        # self.names = set()
+        self.names = []
         self.raw_htmls = raw_htmls
         self.title = None
 
@@ -19,6 +20,8 @@ class NameCounter:
             self.parse_per_page(raw_html)
 
         print(self.title)
+        print('-----------')
+        print(f'Total {len(self.names)} Threads')
         print('-----------')
         print(self.names)
 
@@ -32,4 +35,5 @@ class NameCounter:
                 sentence = tag.text
                 # TODO : Could use Regx
                 name = sentence.split('posted')[0].strip()
-                self.names.add(name)
+                # self.names.add(name)
+                self.names.append(name)
