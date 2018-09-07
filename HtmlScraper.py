@@ -1,5 +1,6 @@
-from selenium import webdriver
 import time
+import os
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,6 +9,12 @@ from selenium.webdriver.support import expected_conditions as EC
 AVENUE_HOME_PAGE_URL = 'http://avenue.mcmaster.ca/?failed=1&authCode=2'
 COURSE_2018FALL_URL = '/d2l/home/252929'
 COURSE_TEST_URL = '/d2l/home/214879'
+
+MAC_ID = os.environ.get('MAC_ID')
+PASSWORD = os.environ.get('PASSWORD')
+
+if not MAC_ID or not PASSWORD:
+    raise Exception('No env variable set for macid and password')
 
 
 class HtmlScraper:
@@ -33,8 +40,8 @@ class HtmlScraper:
         mac_id = self.browser.find_element_by_id("user_id")
         password = self.browser.find_element_by_id("pin")
 
-        mac_id.send_keys("zhangt73")
-        password.send_keys("412476Can*")
+        mac_id.send_keys(MAC_ID)
+        password.send_keys(PASSWORD)
 
         submitButton = self.browser.find_element_by_id("submit")
         submitButton.click()
