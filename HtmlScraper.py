@@ -54,7 +54,7 @@ class HtmlScraper:
         # Avenue Dashboard
         cs1jc3_link = WebDriverWait(self.browser, 10).until(
                 EC.visibility_of_element_located(
-                    (By.XPATH, f"//a[@href='{COURSE_TEST_URL}']")
+                    (By.XPATH, f"//a[@href='{COURSE_2018FALL_URL}']")
                 )
         )
         cs1jc3_link.click()

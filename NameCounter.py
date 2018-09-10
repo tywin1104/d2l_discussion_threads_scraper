@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import json
 
 
 class NameCounter:
@@ -8,15 +9,20 @@ class NameCounter:
         self.raw_htmls = raw_htmls
         self.title = None
 
-    def parse(self):
+    def parse_and_save(self):
         for raw_html in self.raw_htmls:
             self.parse_per_page(raw_html)
 
-        print(self.title)
-        print('-----------')
-        print(f'Total {len(self.names)} Threads')
-        print('-----------')
-        print(self.names)
+        res = {
+            'title': self.title,
+            'total_responses': len(self.names),
+            'names': self.names
+        }
+
+        with open(f'../McMaster/1JC3 TA/M&Ms/{self.title}.json', 'w') as fh:
+            fh.write(json.dumps(res))
+
+        print(f'Total {len(self.names)} Threads saved for {self.title}.')
 
     def parse_per_page(self, html):
         soup = BeautifulSoup(html, 'html.parser')

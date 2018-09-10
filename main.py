@@ -13,6 +13,6 @@ def main():
     scraper.start()
 
     counter = NameCounter(scraper.htmls)
-    counter.parse()
+    counter.parse_and_save()
 
 main()
