@@ -19,7 +19,8 @@ class NameCounter:
             'names': self.names
         }
 
-        with open(f'../McMaster/1JC3 TA/M&Ms/{self.title}.json', 'w+') as fh:
+        # ../McMaster/1JC3 TA/M&Ms/{self.title}.json
+        with open(f'./results/{self.title}.json', 'w+') as fh:
             fh.write(json.dumps(res))
 
         print(f'Total {len(self.names)} Threads saved for {self.title}.')
