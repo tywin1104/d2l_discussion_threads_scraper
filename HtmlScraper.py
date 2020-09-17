@@ -7,8 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 AVENUE_HOME_PAGE_URL = 'http://avenue.mcmaster.ca/?failed=1&authCode=2'
-COURSE_2018FALL_URL = '/d2l/home/252929'
-COURSE_TEST_URL = '/d2l/home/214879'
+COURSE_DISCUSSION_PAGE = 'https://avenue.cllmcmaster.ca/d2l/le/336806/discussions/List'
 
 MAC_ID = os.environ.get('MAC_ID')
 PASSWORD = os.environ.get('PASSWORD')
@@ -46,37 +45,10 @@ class HtmlScraper:
         submitButton = self.browser.find_element_by_id("submit")
         submitButton.click()
 
-        all_courses_tab = WebDriverWait(self.browser, 10).until(
-                EC.visibility_of_element_located((By.XPATH, "//d2l-tab[@title='All']"))
-            )
-        all_courses_tab.click()
-
-        # Avenue Dashboard
-        cs1jc3_link = WebDriverWait(self.browser, 10).until(
-                EC.visibility_of_element_located(
-                    (By.XPATH, f"//a[@href='{COURSE_2018FALL_URL}']")
-                )
-        )
-        cs1jc3_link.click()
-
-        # # Open Discussion Board
-        tabs = self.browser.find_elements_by_css_selector(
-            "button.d2l-navigation-s-group.d2l-dropdown-opener"
-        )
-        communication_tab = tabs[1]
-        communication_tab.click()
-
-        try:
-            dicussion_tab = WebDriverWait(self.browser, 10).until(
-                EC.visibility_of_element_located((By.LINK_TEXT, 'Discussions'))
-            )
-            dicussion_tab.click()
-        except:
-            print('Cuold not locate discussion tab')
-            self.browser.quit()
+        self.browser.get(COURSE_DISCUSSION_PAGE)
 
         # Open M&M page for specified week
-        topic_str = f'M&Ms for Week {self.week}'
+        topic_str = f'Week {self.week} M&Ms'
         mm = self.browser.find_element_by_link_text(topic_str)
         mm.click()
 

@@ -4,7 +4,6 @@ import json
 
 class NameCounter:
     def __init__(self, raw_htmls):
-        # self.names = set()
         self.names = []
         self.raw_htmls = raw_htmls
         self.title = None
@@ -19,7 +18,6 @@ class NameCounter:
             'names': self.names
         }
 
-        # ../McMaster/1JC3 TA/M&Ms/{self.title}.json
         with open(f'./results/{self.title}.json', 'w+') as fh:
             fh.write(json.dumps(res))
 
@@ -31,9 +29,8 @@ class NameCounter:
             self.title = soup.select('h1')[0].text
         tags = soup.select('div.d2l-textblock-secondary')
         for tag in tags:
-            if 'd2l-textblock-strong'not in tag.attrs['class']:
-                sentence = tag.text
-                # TODO : Could use Regx
-                name = sentence.split('posted')[0].strip()
-                # self.names.add(name)
-                self.names.append(name)
+            text = tag.text
+            if not text or text == "•":
+                continue
+            name = text.split('posted')[0].strip()
+            self.names.append(name)
