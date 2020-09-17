@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 
@@ -34,7 +35,4 @@ class MarksCalculator:
         for student in self.students:
             student['weeks'].sort()
 
-obj = MarksCalculator()
-obj.cumulateResults()
-with open(f'./totalResults.json', 'w+') as fh:
-            fh.write(json.dumps(obj.students))
+
